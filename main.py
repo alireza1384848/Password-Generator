@@ -19,6 +19,17 @@ def get_true_false_input(title:str):
             return False
         else:
             print("Your input is unvalid please Enter valid input")
+def get_user_size():
+    while 1:
+        user_input = str(input(Fore.BLUE+"Enter your Password size: "+ Fore.WHITE))
+        if user_input.isdigit():
+            return int(user_input)
+        else:
+            print("Your input is unvalid please Enter valid input")
+
+
+
+
 
 def Set_User_Setting():
     print("Genarator Setting :",user_setting)
@@ -27,7 +38,7 @@ def Set_User_Setting():
     user_setting["is_symbol"] = get_true_false_input("Dose Password have Symbols (Enter 0 for false or 1 for true) :")
     user_setting["is_number"] = get_true_false_input("Dose Password have Number Alphabet (Enter 0 for false or 1 for true) :")
     user_setting["is_space"] = get_true_false_input("Dose Password have Space Alphabet (Enter 0 for false or 1 for true) :"+ Fore.WHITE)
-    user_setting["size"] = int(input(Fore.BLUE+"Enter your Password size: "+ Fore.WHITE))
+    user_setting["size"] = get_user_size()
 
 def chose_random_uppercase():
     return random.choice(list(string.ascii_uppercase))
