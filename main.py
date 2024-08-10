@@ -71,8 +71,16 @@ def Genaratrat_password():
     return genrated_pass
 def welcome_page():
     print(Fore.CYAN+"Welcome to password Genrator!"+Fore.GREEN)
-welcome_page()
 
 
-Set_User_Setting()
-print(Genaratrat_password())
+def main():
+    welcome_page()
+    Set_User_Setting()
+    while 1:
+        print(Genaratrat_password())
+        run_again = input("Do you want anouther password ? (Yes = y, No = n) :")
+        if run_again == 'y':
+            continue;
+        break;
+
+main()
