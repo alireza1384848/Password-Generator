@@ -2,6 +2,7 @@
 import string
 import random
 from colorama import Fore
+import os
 
 user_setting = {"is_upper" :True,
                 "is_lower":True,
@@ -12,10 +13,10 @@ user_setting = {"is_upper" :True,
 }
 def get_true_false_input(title:str):
     while 1:
-        user_input = int(input(Fore.BLUE+title+ Fore.WHITE))
-        if user_input==1:
+        user_input = input(Fore.BLUE+title+ Fore.WHITE)
+        if user_input=='1':
             return True
-        elif user_input==0:
+        elif user_input=='0':
             return False
         else:
             print("Your input is unvalid please Enter valid input")
@@ -27,19 +28,19 @@ def get_user_size():
         else:
             print("Your input is unvalid please Enter valid input")
 
-
-
-
-
 def Set_User_Setting():
     print("Genarator Setting :",user_setting)
-    user_setting["is_upper"] = get_true_false_input("Dose Password have Upper Alphabet (Enter 0 for false or 1 for true) :")
-    user_setting["is_lower"] = get_true_false_input("Dose Password have Lower Alphabet (Enter 0 for false or 1 for true) :")
-    user_setting["is_symbol"] = get_true_false_input("Dose Password have Symbols (Enter 0 for false or 1 for true) :")
-    user_setting["is_number"] = get_true_false_input("Dose Password have Number Alphabet (Enter 0 for false or 1 for true) :")
-    user_setting["is_space"] = get_true_false_input("Dose Password have Space Alphabet (Enter 0 for false or 1 for true) :"+ Fore.WHITE)
+    user_setting["is_upper"] = get_true_false_input("Dose Password have Upper Alphabet "
+                                                    "(Enter 0 for false or 1 for true) :")
+    user_setting["is_lower"] = get_true_false_input("Dose Password have Lower Alphabet "
+                                                    "(Enter 0 for false or 1 for true) :")
+    user_setting["is_symbol"] = get_true_false_input("Dose Password have Symbols "
+                                                     "(Enter 0 for false or 1 for true) :")
+    user_setting["is_number"] = get_true_false_input("Dose Password have Number Alphabet"
+                                                     " (Enter 0 for false or 1 for true) :")
+    user_setting["is_space"] = get_true_false_input("Dose Password have Space Alphabet "
+                                                    "(Enter 0 for false or 1 for true) :"+ Fore.WHITE)
     user_setting["size"] = get_user_size()
-
 def chose_random_uppercase():
     return random.choice(list(string.ascii_uppercase))
 
@@ -65,11 +66,19 @@ def chose_random_symbolcase():
     return random.choice(symbol_list)
 def set_availble_case():
     res= []
-    if user_setting["is_lower"]: res.append(chose_random_lowercase) 
-    if user_setting["is_upper"]:res.append(chose_random_uppercase)
-    if user_setting["is_number"]:res.append(chose_random_numbercase)
-    if user_setting["is_symbol"]:res.append(chose_random_symbolcase)
-    if user_setting["is_space"]:res.append(return_space)
+    zip_with_optoin={
+        "is_lower":chose_random_lowercase,
+        "is_upper" : chose_random_uppercase,
+        "is_number" : chose_random_numbercase,
+        "is_symbol":chose_random_symbolcase,
+        "is_space":return_space
+    }
+    for option,key in user_setting.items():
+        
+        if type(key)==int:
+            continue
+        elif key==True:
+            res.append(zip_with_optoin[option])
     return res
 def Genarate_rand_node():
     available_case=set_availble_case()
@@ -81,17 +90,20 @@ def Genaratrat_password():
         genrated_pass+= str(Genarate_rand_node())
     return genrated_pass
 def welcome_page():
+    os.system("cls")
     print(Fore.CYAN+"Welcome to password Genrator!"+Fore.GREEN)
-
+    
 
 def main():
     welcome_page()
     Set_User_Setting()
+    print('-'*20)
     while 1:
-        print(Genaratrat_password())
+        print(f"Genrated password :"+Fore.CYAN +f"{Genaratrat_password()}" )
+        print(Fore.WHITE,end="")
         run_again = input("Do you want anouther password ? (Yes = y, No = n) :")
         if run_again == 'y':
-            continue;
-        break;
+            continue
+        break
 
 main()
